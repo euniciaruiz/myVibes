@@ -1,0 +1,54 @@
+Clone first the myvibes repository in Github
+
+Plugin
+1. Source code for the plugin by Peteris Krumin: winamp-plugin-digitalpoint-music-reporter/src directory
+2. Download Visual Studio 2010 Ultimate to be able to run/edit the plugin.
+   Once you've downloaded VS2010 Ultimate, open the plugin using the said software.
+4. Open and read the compile.txt found inside the winamp-plugin-digitalpoint-music-reporter folder.
+   Follow the instructions for compiling libcurl.
+   
+Note: 
+   I downloaded the latest libcurl version and included it inside the myvibes folder that you have just cloned. -> curl-7.37.0.tar.gz
+   If you encounter './libcurl directory', this is actually the 'winamp-plugin-digitalpoint-music-reporter/libcurl' directory.
+   Next, you are also required to run the following:
+   > vcvars32
+   > nmake vc
+   Use the Visual Studio Command Prompt 2010 for running the commands. Just find this cmd in your computer.
+
+5. Next, set up LibCurl in Visual Studio 2010. The plugin needs to know the location of libcurl since it uses some 
+   of its features. Just visit this site 'http://www.bloglovin.com/viewer?post=994883165&group=0&frame_type=b&blog=7363143&frame=1&click=0&user=0'
+   for further intructions.
+ 
+Setting up the MyVibes system in your computer [Note: We're going to use Bitnami Wappstack]
+1. Create a database and name it 'myvibes'. Go to myvibes folder and there you will find a file
+   named 'queries'. If you want to see for yourself the myvibes database schema, refer to the Chapter 5 of d3revesion
+   and check if there's something wrong with any of the queries.
+2. Put the myvibes folder inside this directory: BitNami WAPPStack\apache2\htdocs.
+3. Go to myvibes->class and edit 'pgsql_db.class.php'
+   Change the username and password according to the configuration of your postgreSQL database.
+   Now, open your browser then type this 'localhost/myvibes' and create an account.
+   Once you're redirected to index.php, you will notice two errors. To resolve these, just follow the next instruction.
+4. The following are the php scripts, which need to be edited:
+
+-> Go to includes and edit 'authenticate.inc.php':
+
+Replace 
+
+session_start(); 
+
+to this
+
+if(!isset($_SESSION)) { 
+	session_start(); 
+}
+
+Restart the page and one problem down. Next
+
+-> Go to includes and edit 'loginreq.php':
+
+Comment or delete this line of code: include "class/pgsql_db.class.php";
+
+-> Open index.php and profile.php and include this code to those two scripts: include "class/pgsql_db.class.php".
+   If you encouter the same problem as you navigate through the myvibes system just use the solution provided above to resolve it.
+
+If you have a hard time following my instructions then kita nlang ta krong friday or i-chat nlang q sa fb.
